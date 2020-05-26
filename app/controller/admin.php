@@ -33,15 +33,11 @@ class admin_controller extends controller {
 
         
         }
-    	public function signin(){
-    		
 
-
-    	}
 
       	public  function vcode(){
-
-      		return authcode_lib::vcode();
+            
+            authcode_lib::vcode();
         	
         }
 
