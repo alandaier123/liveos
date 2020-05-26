@@ -21,7 +21,7 @@ class admin_controller extends controller {
     		if(isset($_POST['action']) &&  $_POST['action'] == 'login'){
 
     			debug::p($_POST);
-
+                echo 'sdfs';
     			
     		}else{
 
