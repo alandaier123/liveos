@@ -38,7 +38,21 @@ class authcode_lib{
     }
 
     
+    public static function verify_code($code = 0 ,$time = 60){
+        
+        if( isset( $_SESSION['codetime']) && (( $_SESSION['codetime'] + $time) > time() )  ){
+            unset( $_SESSION['codetime'] );
+            
+            if(isset($_SESSION['code']) && $_SESSION['code'] == $code){
+                unset( $_SESSION['code'] );
+                return true;
+            }            
+         
+        }
 
+        return false;    
+        
+    }
     
 
   

@@ -100,17 +100,14 @@ class response {
      */
     public static function jsonp($errno = 0, $error = '', $data = [], $exit = true){
         $response = json_encode(['errno' => $errno, 'error' => $error, 'data'=>$data]);
-        if($_GET['callback']) {
+        if(isset($_GET['callback'])) {
             $callback = htmlentities($_GET['callback'],ENT_QUOTES);
             echo $callback . '(' . $response . ');';
         } else {
             echo $response;
             //die;
         }
-        if($exit) {
-            Router::finish();
-            exit();
-        }
+   
     }
 
 

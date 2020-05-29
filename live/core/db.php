@@ -40,7 +40,7 @@ class db{
             
             self::$conn = new pdo($dsn, $config['username'], $config['password']); 
 
-            self::$conn->setattribute(PDO::ATTR_CASE, PDO::CASE_UPPER);
+            self::$conn->setattribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
             
         }
         
@@ -60,7 +60,14 @@ class db{
         self::$conn = null; 
         return $rs; 
     } 
-    
+    public function getone($sql, $parameters = null){
+        $data = $this->query($sql, $parameters);
+        if($data){
+            return $data[0];
+        }
+        return false;
+    } 
+
     public  function getconfig(){
         return self::$dbconfig;
     }

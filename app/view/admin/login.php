@@ -29,7 +29,7 @@
 </div>
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
-    <form class="form form-horizontal" method="post" id="demoform">
+    <form class="form form-horizontal" onsubmit="return false" method="post" id="demoform">
 	<input type="hidden" name="token" value="<?php echo '$_SESSION[\'token\']';?>" >
 	<input type="hidden" name="action" value="login" />
       <div class="row cl">
@@ -66,7 +66,7 @@
 
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
-          <input name="" type="submit" class="btn btn-success radius size-L" value="登录">
+          <input name="" type="submit" onclick="login()" class="btn btn-success radius size-L" value="登录">
           
         </div>
       </div>
@@ -86,7 +86,25 @@ function shuaxin(){
 	
 	$("#newimg").attr({'src':'/admin/vcode?code='+Math.ceil(Math.random()*100000)    });
 }
-
+function login() {
+            $.ajax({  type: "POST",dataType: "json",
+                url: "/admin/login" ,//url
+                data: $('#demoform').serialize(),
+                success: function (result) {
+                    
+                    if (result.errno == 0) {
+                        location.href = '/admin/index';
+                    }else{
+                      shuaxin();
+                      alert(result.error);
+                    }
+                    
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
+        }
 $(function(){
 
 	$("#demoform").Validform({

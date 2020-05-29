@@ -91,6 +91,7 @@ router::auto();
 // $dbconfig = $db->getconfig();
 // debug::p($conn,$dbconfig);
 
+//$db = new db('zhibo');
 // $sql = 'select * from zb_admin order by id';
 // $user = $db->query($sql);
 // debug::p($user);
