@@ -86,12 +86,17 @@ register_shutdown_function(function() {
 //路由测试
 router::auto();
 
-// $db = new db('zhibo');
-// $conn = $db->getconn();
-// $dbconfig = $db->getconfig();
+
+
+
+// db::loadconfig('liveos');
+// $sql = 'select * from ay_admin order by id';
+// $user = db::getone($sql);
+// debug::p($user);
+
+
+// db::loadconfig('zhibo');
+// $conn = db::getconn();
+// $dbconfig = db::getconfig();
 // debug::p($conn,$dbconfig);
 
-//$db = new db('zhibo');
-// $sql = 'select * from zb_admin order by id';
-// $user = $db->query($sql);
-// debug::p($user);

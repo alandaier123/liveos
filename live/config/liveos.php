@@ -6,7 +6,7 @@ return array(
 	              'port' => '3306',
 	              'username' => 'root',
 	              'password' => 'DRsXT5ZJ6Oi55LPQ',
-	              'dbname' => 'zhibo',
+	              'dbname' => 'liveos',
 	              'charset' => 'utf8',
 	              'prefix' => 'ay_'
      );

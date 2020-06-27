@@ -74,8 +74,8 @@ class admin_controller extends controller {
                     $name = $_POST['name'] = trim( $_POST['name']);
                     $pass = $_POST['pass'] = trim( $_POST['pass']);
 
-                    $db = new db('zhibo');
-                    $sql = 'select * from zb_admin where name = \''.$name.'\' order by id';
+                    $db = new db('liveos');
+                    $sql = 'select * from ay_admin where name = \''.$name.'\' order by id';
                     $user = $db->getone($sql);
                     if($user){
                         

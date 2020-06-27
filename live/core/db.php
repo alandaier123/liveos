@@ -4,43 +4,54 @@ class db{
 
 
     /*
-    一个类只能建立一个连接
-    $db = new db('srdb');
-    $sql = 'select * from md_user';
-    $user = $db->query($sql);
+   
+    db::loadconfig('liveos');
+    $sql = 'select * from ay_admin order by id';
+    $user = db::getone($sql);
+    debug::p($user);
     */
     public static $conn = null;
     public static $dbconfig = null;
     
+    public static $key = null;
 
 
+    public function __construct($key = null){
 
-    public function __construct($dbconfig ){
-        self::loadconfig($dbconfig);
+        if($key!=null ){
+            self::$key = $key;
+            self::loadconfig();
+        }
+
+
     } 
 
-    protected  static function loadconfig($config,$is_public = true){
+    public  static function loadconfig($key = null,$is_public = true){
+        if($key == null){
+            $key = self::$key;
+        }
+        self::$key = $key;       
 
-        if(!isset($dbconfig)){
-            self::$dbconfig = autoloader::loadConfig($config,$is_public);
-
-            self::getconnection(self::$dbconfig);
+        if(!isset(self::$dbconfig[$key])){
+            self::$dbconfig[$key] = autoloader::loadConfig($key,$is_public);
 
         }
         
     }
 
-    protected static function getconnection($config) { 
+    protected static function getconnection() { 
         
 
-        if(self::$conn==null){
-            
+        if(self::$conn[self::$key]==null){
+
+            $config = self::$dbconfig[self::$key];
+
             $dsn = $config['driver'].':dbname='.$config['dbname'] . ';host=' . $config['host'] . ';port=' .$config['port']. ';charset=' .$config['charset']; 
             
             
-            self::$conn = new pdo($dsn, $config['username'], $config['password']); 
+            self::$conn[self::$key] = new pdo($dsn, $config['username'], $config['password']); 
 
-            self::$conn->setattribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+            self::$conn[self::$key]->setattribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
             
         }
         
@@ -49,29 +60,30 @@ class db{
     } 
     
 
-    public function query($sql, $parameters = null) { 
+    public static function query($sql, $parameters = null) { 
          
-        
-        $stmt = self::$conn->prepare($sql); 
+        self::getconnection();
+        $stmt = self::$conn[self::$key]->prepare($sql); 
         $stmt->execute($parameters); 
         $rs = $stmt->fetchall(); 
         
         $stmt = null; 
-        self::$conn = null; 
+        //self::$conn[self::$key] = null; 
         return $rs; 
     } 
-    public function getone($sql, $parameters = null){
-        $data = $this->query($sql, $parameters);
+    public static function getone($sql, $parameters = null){
+        $data = self::query($sql, $parameters);
         if($data){
             return $data[0];
         }
         return false;
     } 
 
-    public  function getconfig(){
+    public static function getconfig(){
         return self::$dbconfig;
     }
-    public function getconn(){
+    public static function getconn(){
+        self::getconnection();
         return self::$conn;
         
     }
