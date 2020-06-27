@@ -1,5 +1,6 @@
 <?php
 
+
 class db{
 
 
@@ -29,8 +30,10 @@ class db{
     public  static function loadconfig($key = null,$is_public = true){
         if($key == null){
             $key = self::$key;
+        }else{
+            self::$key = $key;  
         }
-        self::$key = $key;       
+             
 
         if(!isset(self::$dbconfig[$key])){
             self::$dbconfig[$key] = autoloader::loadConfig($key,$is_public);
@@ -41,8 +44,8 @@ class db{
 
     protected static function getconnection() { 
         
-
-        if(self::$conn[self::$key]==null){
+        
+        if(!isset(self::$conn[self::$key])){
 
             $config = self::$dbconfig[self::$key];
 

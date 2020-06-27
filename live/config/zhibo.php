@@ -4,10 +4,10 @@ return array(
 				'driver' => 'mysql',
                   'host' => '127.0.0.1',
 	              'port' => '3306',
-	              'username' => 'root',
-	              'password' => 'DRsXT5ZJ6Oi55LPQ',
+	              'username' => 'roota',
+	              'password' => 'qqqqaa',
 	              'dbname' => 'zhibo',
 	              'charset' => 'utf8',
-	              'prefix' => 'ay_'
+	              'prefix' => 'zb_'
      );
 	

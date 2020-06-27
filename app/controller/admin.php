@@ -74,9 +74,10 @@ class admin_controller extends controller {
                     $name = $_POST['name'] = trim( $_POST['name']);
                     $pass = $_POST['pass'] = trim( $_POST['pass']);
 
-                    $db = new db('liveos');
-                    $sql = 'select * from ay_admin where name = \''.$name.'\' order by id';
-                    $user = $db->getone($sql);
+                    db::loadconfig('zhibo');
+                    $sql = 'select * from zb_admin where name = \''.$name.'\' order by id';
+                    $user = db::getone($sql);
+
                     if($user){
                         
 
@@ -128,6 +129,20 @@ class admin_controller extends controller {
             
             authcode_lib::vcode();
         	
+        }
+
+        public function admin(){
+             $html = view::make('admin/admin');
+
+            ECHO $html;
+        }
+        public function adminadd(){
+
+            $html = view::make('admin/adminadd');
+
+            ECHO $html;
+
+
         }
 
 

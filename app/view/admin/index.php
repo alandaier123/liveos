@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css" href="/www/h-ui/icheck/icheck.css">
 <link rel="stylesheet" type="text/css" href="/www/h-ui/skin/blue/skin.css" id="skin">
 <link rel="stylesheet" type="text/css" href="/www/h-ui/css/style.css">
+
 <link rel="stylesheet" type="text/css" href="/www/h-ui/js/skin/layer.css" id="layui_layer_skinlayercss" style=""></head>
 <script type="text/javascript" src="/www/js/jquery.min.js"></script>
 <script type="text/javascript" src="/www/h-ui/js/layer.js"></script>
@@ -80,7 +81,7 @@ function loginout(){
             <dt class=""><i class="Hui-iconfont "></i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow"></i></dt>
             <dd style="display: none;">
                 <ul>
-                 <li><a _href="?action=adminfenzu" data-title="管理权限" href="javascript:void(0)">管理权限</a></li><li><a _href="?action=admin" data-title="管理会员" href="javascript:void(0)">管理会员</a></li><li><a _href="?action=adminlog" data-title="管理日志" href="javascript:void(0)">管理日志</a></li>                </ul>
+                 <li><a _href="?action=adminfenzu" data-title="管理权限" href="javascript:void(0)">管理权限</a></li><li><a _href="/admin/admin" data-title="管理会员" href="javascript:void(0)">管理会员</a></li><li><a _href="?action=adminlog" data-title="管理日志" href="javascript:void(0)">管理日志</a></li>                </ul>
             </dd>
         </dl>
 

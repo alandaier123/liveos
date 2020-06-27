@@ -89,8 +89,8 @@ router::auto();
 
 
 
-// db::loadconfig('liveos');
-// $sql = 'select * from ay_admin order by id';
+// db::loadconfig('zhibo');
+// $sql = 'select * from zb_admin order by id';
 // $user = db::getone($sql);
 // debug::p($user);
 
@@ -99,4 +99,5 @@ router::auto();
 // $conn = db::getconn();
 // $dbconfig = db::getconfig();
 // debug::p($conn,$dbconfig);
+
 
