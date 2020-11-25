@@ -2,17 +2,12 @@
 
 class router{
 
-	/* 
-	 * 不限制访问指定目录下文件及方法
-	 * 
-	*/
-
+	
 	protected static $path_info = array();
 
 	//控制器、方法、参数信息
 	protected static $controller = null;
 	protected static $action = null;
-	protected static $params = array();
 
 
 	public static function auto(){
@@ -25,12 +20,12 @@ class router{
 			 
 			
 
-			controller::call(self::$controller, self::$action, self::$params);
+			controller::call(self::$controller, self::$action);
 		} else {
 
 			if(DEFAULT_CTL_404) {
 				self::default_404();
-				return controller::call(self::$controller, self::$action, self::$params);
+				return controller::call(self::$controller, self::$action);
 			}
 
 			
@@ -44,51 +39,54 @@ class router{
 	
 		self::$action     = DEFAULT_ACT_404;
 	}
+
 /*
-*若存在目录同名controller文件，不能访问
-* @param $dir_num 控制器前缀目录不进入查找
-*/
+	url中不含参数
+	默认url至少两个分段 一个分段暂不处理
+	倒数第一个是action，第二个是controller
+ */
 	protected static function parse_controller(){
 
-		$dir_num = 0;		
+		$num = count(self::$path_info);
+		
+			
 
-		if(empty(self::$path_info[$dir_num])) {
-			//debug::p(self::$path_info[$dir_num]);die;
+		if($num <=1 || empty(self::$path_info[0])) {
+			
 			self::default_404();
 		
 			return true;
 		} else {
-			$dir_name = APP_PATH.DS.autoloader::controller;			
+			$dir_name = APP_PATH.DS.autoloader::controller;		
 
-			foreach (self::$path_info as $key => $path) {
+			if($num>2){
+				foreach ( array_slice(self::$path_info, 0, $num- 2) as $path) {
 
-				//从$dir_num位置开始查找，跳过之前
-				if($key < $dir_num) {
-					
-					continue;
-				}
-				if (!preg_match('/^[\w]+$/', $path)) {
-					return false;
-				}
-			
 				
-
-					if(file_exists($dir_name.DS.strtolower($path).EXT )){
-
-						self::$controller = implode('_', array_slice(self::$path_info, $dir_num, $key - $dir_num + 1));
-						//var_dump(self::$controller, $dir_num, $key);die;
-						self::parse_action($key);
-						return true;
+					if (!preg_match('/^[\w]+$/', $path)) {
+						return false;
 					}
 
 					$dir_name .= DS . strtolower($path);
 				
 				
+				}
 			}
+
+
+				
+			//var_dump($dir_name.DS.strtolower(self::$path_info[$num-2]).EXT );die;
+			if(file_exists($dir_name.DS.strtolower(self::$path_info[$num-2]).EXT )){
+
+				self::$controller = implode('_', array_slice(self::$path_info, 0, $num- 1));
+				//var_dump(self::$controller);die;
+				self::parse_action($num-2);
+				return true;
+			}
+
 			return false;
 		}
 	}
-
 	/**
 	 * 1、保存url信息
 	 * 
@@ -115,7 +113,6 @@ class router{
 		} else {
 			self::$action = self::$path_info[$key + 1];
 			
-			self::$params = array_slice(self::$path_info, $key + 2);
 		}
 	}
 

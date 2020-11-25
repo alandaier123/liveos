@@ -1,27 +1,15 @@
-<html><head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta http-equiv="Cache-Control" content="no-siteapp">
 
-<link rel="stylesheet" type="text/css" href="/www/h-ui/css/H-ui.min.css">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/css/H-ui.admin.css">
-<link rel="stylesheet" type="text/css" href="/www/js/Hui-iconfont/1.0.7/iconfont.css">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/icheck/icheck.css">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/skin/blue/skin.css" id="skin">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/css/style.css">
 
-<script type="text/javascript" src="/www/js/jquery.min.js"></script> 
-<script type="text/javascript" src="/www/h-ui/js/layer.js"></script> 
-<script type="text/javascript" src="/www/h-ui/js/H-ui.js"></script>
-<script type="text/javascript" src="/www/h-ui/js/H-ui.admin.js"></script> 
+
+
+
+<link rel="stylesheet" href="/www/h-ui/js/skin/layer.css" id="layui_layer_skinlayercss" style="">
 <script type="text/javascript" src="/www/js/lib/Validform.min.js"></script>
 <script type="text/javascript" src="/www/js/Switch/bootstrapSwitch.js"></script>
-<style>
-</style>
+
 <title>管理会员</title>
-<link rel="stylesheet" href="http://127.0.0.17/tpl/h-ui/js/skin/layer.css" id="layui_layer_skinlayercss" style=""></head>
+
+
 <body>
 
 <nav class="breadcrumb"> <i class="Hui-iconfont"></i> 首页 <span class="c-gray en">&gt;</span> 管理会员 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont"></i></a></nav>
@@ -103,16 +91,13 @@
    
 </div>
 
+<a href="javascript:void(0)" class="Hui-iconfont toTop" title="返回顶部" alt="返回顶部" style="display:none"></a> 
 
 
-<footer class="footer mt-20">
-	<div class="container">
-		<p>
-		Copyright 安优企业建站cms系统 by <a href="http://www.anyou.org/" target="_blank">安优企业建站系统</a>
-		</p>
-	</div>
-</footer>
 
+
+
+</body>
 <script>
 
 function suijishu(){
@@ -219,7 +204,7 @@ if( typeof  KindEditor !=='undefined' ){
 }
 
 </script>
-<a href="javascript:void(0)" class="Hui-iconfont toTop" title="返回顶部" alt="返回顶部" style="display:none"></a> 
+
 
 
 <script type="text/javascript">
@@ -331,4 +316,3 @@ function admin_start(obj,id){
 }
 </script>
 
-</body></html>

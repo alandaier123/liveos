@@ -21,7 +21,7 @@ class admin_controller extends controller {
         private function frame($body ='', $params = []){
             $html = '';
             $html .= view::make('admin/frame/header');
-            $html .= view::make('admin/frame/aside'); 
+            //$html .= view::make('admin/frame/aside'); 
             $html .= view::make($body,$params);
             $html .= view::make('admin/frame/footer'); 
             
@@ -74,8 +74,8 @@ class admin_controller extends controller {
                     $name = $_POST['name'] = trim( $_POST['name']);
                     $pass = $_POST['pass'] = trim( $_POST['pass']);
 
-                    db::loadconfig('zhibo');
-                    $sql = 'select * from zb_admin where name = \''.$name.'\' order by id';
+                    db::loadconfig('liveos');
+                    $sql = 'select * from ay_admin where name = \''.$name.'\' order by id';
                     $user = db::getone($sql);
 
                     if($user){
@@ -132,13 +132,14 @@ class admin_controller extends controller {
         }
 
         public function admin(){
-             $html = view::make('admin/admin');
-
+            $html = $this->frame('/admin/admin');
             ECHO $html;
         }
         public function adminadd(){
 
-            $html = view::make('admin/adminadd');
+            $html .= view::make('admin/frame/header');
+
+            $html .= view::make('admin/adminadd');
 
             ECHO $html;
 
