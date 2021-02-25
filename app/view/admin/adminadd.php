@@ -2,14 +2,14 @@
 
 
 <link rel="stylesheet" type="text/css" href="/www/h-ui/skin/blue/skin.css" id="skin">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/js/skin/layer.css" id="layui_layer_skinlayercss" style="">
+
 <link rel="stylesheet" type="text/css" href="/www/js/Switch/bootstrapSwitch.css">
 
 <script type="text/javascript" src="/www/js/lib/Validform.min.js"></script>
 <script type="text/javascript" src="/www/js/Switch/bootstrapSwitch.js"></script>
 
 
-<title>管理会员</title>
+<title></title>
 
 <body>
 
@@ -22,27 +22,27 @@
 
 <article class="page-container">
     <form method="post" class="form form-horizontal" id="form-admin-role-add">
-          <input type="hidden" name="token" value="7c9ddfcd0560bc4da671319cd6cd23d7">
-
+          <input type="hidden" id="token" value="<?php echo $token;?>">
+          <input type="hidden" id="id" value="0">  
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>登录名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" name="name" datatype="*" nullmsg=" ">
+                <input type="text" class="input-text" value="" placeholder="" id="name" datatype="*" nullmsg=" ">
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">登录密码：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="为空不修改" name="pass">
+                <input type="text" class="input-text" value="" placeholder="为空不修改" id="pass">
             </div>
         </div>
 
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">超级密码：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="为空不修改" name="epass">
+                <input type="text" class="input-text" value="" placeholder="为空不修改" id="epass">
             </div>
         </div>
 
@@ -51,8 +51,14 @@
             <label class="form-label col-xs-4 col-sm-3"> 用户状态：</label>
             <div class="formControls col-xs-8 col-sm-9">
 
-             <div class="switch"  data-on-label=" 已开启  " data-off-label=" 已关闭 " >
-                  <input type="checkbox"    name="off"/>
+             
+                <!--   <select class="select"    id="off">
+                  <option value="0">已关闭</option>
+                  <option value="1">已开启</option>
+                </select> -->
+
+             <div class="switch" id="off"  data-on-label="已开启" data-off-label="已关闭" >
+                  <input type="checkbox"    />
              </div>
   
 
@@ -64,10 +70,14 @@
             <label class="form-label col-xs-4 col-sm-3">  效验登录IP：</label>
             <div class="formControls col-xs-8 col-sm-9">
 
-             <div class="switch"  data-on-label=" 已开启 " data-off-label=" 已关闭 " >
-                  <input type="checkbox"     name="yanzhengip"/>
-             </div>
-  
+            <!-- 
+                  <select class="select"    id="yanzhengip">
+                    <option value="0">已关闭</option>
+                    <option value="1">已开启</option>
+                  </select> -->
+            <div class="switch" id="yanzhengip" data-on-label="已开启" data-off-label="已关闭" >
+                  <input type="checkbox"    />
+            </div>
 
             </div>
         </div>
@@ -79,7 +89,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户权限：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <select name="type" class="select" size="1"> <option value="0">创始人</option></select>
+                <select id="type" class="select" size="1"> <option value="0">创始人</option></select>
             </div>
         </div>
 
@@ -87,7 +97,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"> IP：</label>
             <div class="formControls col-xs-8 col-sm-9">
-               <span class="yddddd">127.0.0.1</span>
+               <span id ="ip" class="yddddd"></span>
                 
             </div>
         </div>
@@ -96,7 +106,7 @@
             <label class="form-label col-xs-4 col-sm-3">时间：</label>
             <div class="formControls col-xs-8 col-sm-9">
 
-               <span class="yddddd"> 2020-06-06 21:19:24</span>
+               <span id="atime" class="yddddd"></span>
                 
             </div>
         </div>
@@ -105,7 +115,7 @@
 
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                <input class="btn btn-primary radius" name="submit" type="submit" value="&nbsp;&nbsp;编辑&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" name="submit"  onclick="udp()" type="button" value="&nbsp;&nbsp;编辑&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -113,22 +123,71 @@
   
                     
 
-<a href="javascript:void(0)" class="Hui-iconfont toTop" title="返回顶部" alt="返回顶部" style="display:none"></a>         
+<!-- <a href="javascript:void(0)" class="Hui-iconfont toTop" title="返回顶部" alt="返回顶部" style="display:none"></a>   -->       
  
 
 
 
 
 <script type="text/javascript">
-var LX = 0;
+    var action = "<?php echo $action;?>";
+    var LX = 0;
+    var user = '<?php echo isset($userinfo) && $userinfo['id']>0?json_encode($userinfo):null;?>';
+    var userinfo = user==''?'':JSON.parse(user);
+    function init(){
+        if(userinfo!='' && parseInt(userinfo['id'])>0){
+            $('#id').val(userinfo['id']);
+            $('#name').val(userinfo['name']);
+            $("#ip").text(userinfo['ip']);
+            $("#atime").text(getLocalTime(userinfo['atime']));
+            if(parseInt(userinfo['off'])==1){
+                $("#off .switch-animate").removeClass("switch-off").addClass("switch-on");
+            }
+            if(parseInt(userinfo['yanzhengip'])==1){
+                $("#yanzhengip .switch-animate").removeClass("switch-off").addClass("switch-on");
+            }
+        }
+        
+    }
+    function udp() {
+       
+        var fid = ['token','id','name', 'pass', 'epass','type'];
+        var data1 = {};
+        for (f in fid) {
+            data1[fid[f]] = $("#" + fid[f]).val();
+        }
 
+        data1['off'] = $("#off").children("div").is(".switch-on")?1:0;
+        data1['yanzhengip'] = $("#yanzhengip").children("div").is(".switch-on")?1:0;
+      /*  if(data1['name']=='' || data1['pass']==''){
+          alert('用户名或密码不能为空！');
+          return;
+        }
+        if(data1['pass'].length<6){
+          alert('密码不能少于6位字符！！');
+          return;
+        }*/
+        //console.log(data1);return;
+        $.post("/admin/admin/adminadd", data1, function (data) {
+            //alert(data);
+            if (typeof data == 'string') {
+                data = $.parseJSON(data);
+            }
+            
+            
+            alert(data.error);
+            window.parent.parent.scrollTo(0,0);parent.location.reload();
+            
+
+        });
+    }
 
 $(function(){
 
  
-
+ init();
  $("#form-admin-role-add" ).Validform( { tiptype:2 });
-
+ $(document).attr("title",action);
 
 
 });
@@ -137,95 +196,7 @@ $(function(){
 
 
 
-var token ='9f51e9974205fb73870abd2d084eafb8';
 
-function admin_add(title ,url ,w ,h){
-
-         layer_show(title ,url ,w ,h);
-
-}
-
-function admin_del(obj,id){
-
-        layer.confirm('删除须谨慎，确认要删除吗？',{title:'操作提示',btn:["YES","NO"]},function(index){
-          
-              $.getJSON('?action=admin&mode=del&ajson=1&token=' + token + '&id='+id,{},function(data){
-
-                  if(data.token) token = data.token;
-              
-                  if(data.code == 1){
-
-                       $(obj).parents("tr").remove();
-
-                       shu = $("#tiaoshu").html() *1;
-
-                       $("#tiaoshu").html( shu -1 );
-
-                       layer.msg('已删除! ',{icon:1,time:1000});
-
-                  }else  layer.msg( data.msg ,{ icon: 2 ,time : 1000});
-
-              });
-
-        });
-}
-
-function admin_edit(title,url,id,w,h){
-
-         layer_show( title, url, w, h);
-}
-
-
-function admin_stop(obj,id){
-
-         layer.confirm( '确认要关闭吗？',{title:'操作提示',btn:["YES","NO"]}, function( index){
-
-           $.getJSON('?action=admin&mode=edit&ajson=1&token=' + token + '&id='+id,{},function(data){
-
-                 if(data.token) token = data.token;
-                
-                 if(data.code == 1){
-
-                     $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_start(this,'+id+')" href="javascript:;" title="开启" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
-
-                    $(obj).parents( "tr").find( ".td-status").html( '<span class="label radius">已关闭</span>');
-
-                    $(obj).remove();
-
-                    layer.msg( '已关闭!',{ icon: 5 ,time : 1000});
-                
-                 }else layer.msg( data.msg ,{ icon: 2 ,time : 1000});
-
-           });
-
-       });
-}
-
-
-function admin_start(obj,id){
-
-    layer.confirm( '确认要开启吗？',{title:'操作提示',btn:["YES","NO"]},function( index){
-
-        $.getJSON('?action=admin&mode=edit&ajson=1&token=' + token + '&id='+id,{},function(data){
-
-             if( data.token ) token = data.token;
-
-             if( data.code == 1){
-
-                    $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,'+id+')" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
-
-                    $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已开启</span>');
-
-                    $(obj).remove();
-
-                    layer.msg( '已开启!' , {icon: 6 , time : 1000});
-
-
-             }else   layer.msg(  data.msg ,{ icon: 2 ,time : 1000});
-         
-       });
-   });
-}
 </script>
 
 </body></html>

@@ -36,12 +36,13 @@ class controller{
 			$controller_name = $controller . self::controller_ext;
 			$action_name  = $action ;
 				
-
+				//var_dump($controller_name,$action_name);die;
 				if(method_exists($controller_name, $action_name)) {
 					$ctl = new $controller_name;
 					self::$called_action[] = $controller .'.'. $action ;
 					self::$last_controller = $controller;
 					self::$last_action = $action;
+
 					call_user_func_array(array($ctl, $action_name), (array) $params);
 				} else {					
 					echo '页面不存在！';

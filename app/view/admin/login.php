@@ -30,12 +30,12 @@
 <div class="loginWraper">
   <div id="loginform" class="loginBox">
     <form class="form form-horizontal" onsubmit="return false" method="post" id="demoform">
-	<input type="hidden" name="token" value="<?php echo '$_SESSION[\'token\']';?>" >
+	<input type="hidden" name="token" value="<?php echo $token;?>" >
 	<input type="hidden" name="action" value="login" />
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
         <div class="formControls col-xs-5">
-          <input id="" name="name" type="text" placeholder="账号" class="input-text size-L"    datatype="*"  nullmsg="请输入账号！" >
+          <input  name="name" type="text" placeholder="账号" class="input-text size-L"    datatype="*"  nullmsg="请输入账号！" >
         </div>
 		<div class="formControls col-xs-4">
 		</div>
@@ -44,7 +44,7 @@
       <div class="row cl">
         <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60e;</i></label>
         <div class="formControls col-xs-5">
-          <input id="" name="pass" type="password" placeholder="密码" class="input-text size-L" datatype="*6-20" nullmsg="请输入密码！">
+          <input  name="pass" type="password" placeholder="密码" class="input-text size-L" datatype="*6-20" nullmsg="请输入密码！">
         </div>
 		<div class="formControls col-xs-4">
 		</div>
@@ -54,7 +54,7 @@
         <div class="formControls col-xs-8 col-xs-offset-3">
           <input class="input-text size-L" type="text" placeholder="验证码"  maxlength="4" name="code" datatype="n" style="width:113px;">
 
-          <img src="/admin/vcode" onclick="shuaxin();" id="newimg"> 
+          <img src="/vcode/index" onclick="shuaxin();" id="newimg"> 
 		  <a id="kanbuq" onclick="shuaxin();" href="javascript:;">点击刷新验证码</a>
 
 
@@ -84,11 +84,12 @@
 
 function shuaxin(){ 
 	
-	$("#newimg").attr({'src':'/admin/vcode?code='+Math.ceil(Math.random()*100000)    });
+	$("#newimg").attr({'src':'/vcode/index?code='+Math.ceil(Math.random()*100000)    });
 }
 function login() {
+  
             $.ajax({  type: "POST",dataType: "json",
-                url: "/admin/login" ,//url
+                url: "/vcode/login" ,//url
                 data: $('#demoform').serialize(),
                 success: function (result) {
                     

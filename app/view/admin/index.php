@@ -1,54 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="renderer" content="webkit|ie-comp|ie-stand">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-<title>企业建站系统 V.7.9 </title>
-<link rel="Bookmark" href="/favicon.ico">
-<link rel="Shortcut Icon" href="/favicon.ico">
 
-<link rel="stylesheet" type="text/css" href="/www/h-ui/css/H-ui.min.css">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/css/H-ui.admin.css">
-<link rel="stylesheet" type="text/css" href="/www/js/Hui-iconfont/1.0.7/iconfont.css">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/icheck/icheck.css">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/skin/blue/skin.css" id="skin">
-<link rel="stylesheet" type="text/css" href="/www/h-ui/css/style.css">
 
-<link rel="stylesheet" type="text/css" href="/www/h-ui/js/skin/layer.css" id="layui_layer_skinlayercss" style=""></head>
-<script type="text/javascript" src="/www/js/jquery.min.js"></script>
-<script type="text/javascript" src="/www/h-ui/js/layer.js"></script>
-<script type="text/javascript" src="/www/h-ui/js/H-ui.js"></script>
-<script type="text/javascript" src="/www/h-ui/js/H-ui.admin.js"></script>
-<script type="text/javascript">
-function article_add(title,url){
-    var index = layer.open({
-        type: 2,
-        title: title,
-        content: url
-    });
-    layer.full(index);
-}
-function loginout(){
-        $.get('/admin/quite', {},function(res){
-
-                    res = JSON.parse(res);
-                //console.log(res.errno);
-                if (res.errno==0) {
-                    
-                  location.href = '/admin/login';
-                }else{
-                    alert(res.error);
-                }
-                
-    });
-
-}
-  
-
-</script>
 <body class="no-skin">        
         <header class="navbar-wrapper">
     <div class="navbar navbar-fixed-top">
@@ -81,7 +32,7 @@ function loginout(){
             <dt class=""><i class="Hui-iconfont "></i> 管理员管理<i class="Hui-iconfont menu_dropdown-arrow"></i></dt>
             <dd style="display: none;">
                 <ul>
-                 <li><a _href="?action=adminfenzu" data-title="管理权限" href="javascript:void(0)">管理权限</a></li><li><a _href="/admin/admin" data-title="管理会员" href="javascript:void(0)">管理会员</a></li><li><a _href="?action=adminlog" data-title="管理日志" href="javascript:void(0)">管理日志</a></li>                </ul>
+                 <li><a _href="?action=adminfenzu" data-title="管理权限" href="javascript:void(0)">管理权限</a></li><li><a _href="/admin/admin/index" data-title="管理会员" href="javascript:void(0)">管理会员</a></li><li><a _href="/admin/adminlog/index" data-title="管理日志" href="javascript:void(0)">管理日志</a></li>                </ul>
             </dd>
         </dl>
 
@@ -150,6 +101,37 @@ function loginout(){
 
 
 
+<script type="text/javascript">
+    var action = "<?php echo $action;?>";
+    function article_add(title,url){
+        var index = layer.open({
+            type: 2,
+            title: title,
+            content: url
+        });
+        layer.full(index);
+    }
+    function loginout(){
+            $.get('/admin/quite', {},function(res){
 
+                        res = JSON.parse(res);
+                    //console.log(res.errno);
+                    if (res.errno==0) {
+                        
+                      location.href = '/admin/tologin';
+                    }else{
+                        alert(res.error);
+                    }
+                    
+        });
+
+    }
+  
+$(function(){
+
+ $(document).attr("title",action);
+
+
+});
+</script>
 </body>
-</html>

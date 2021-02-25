@@ -18,7 +18,7 @@ class router{
 
 		if(self::parse_controller() && self::$controller) {
 			 
-			
+			//var_dump(self::$controller,self::$action);die;
 
 			controller::call(self::$controller, self::$action);
 		} else {

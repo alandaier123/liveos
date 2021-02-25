@@ -88,7 +88,6 @@ router::auto();
 
 
 
-
 // db::loadconfig('zhibo');
 // $sql = 'select * from zb_admin order by id';
 // $user = db::getone($sql);

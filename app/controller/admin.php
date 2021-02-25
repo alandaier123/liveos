@@ -6,35 +6,46 @@
 
 class admin_controller extends controller {
 
-
-        function __construct() {
-
-            parent::__construct();          
+        public $tokenkey = null;
+        public static $lang     = null;
+        function __construct(){
+            parent::__construct();
+            self::$lang = config::load('lang/china',false);
             if (!ini_get("session.auto_start")) {
                 
                 session_lib::setsession(); 
-            }    
-                      
-                        
-        }
-        
-        private function frame($body ='', $params = []){
-            $html = '';
-            $html .= view::make('admin/frame/header');
-            //$html .= view::make('admin/frame/aside'); 
-            $html .= view::make($body,$params);
-            $html .= view::make('admin/frame/footer'); 
-            
-            return $html;
-
-        }
-    	public  function index(){
-            if(!isset($_SESSION['_eid']) || $_SESSION['_eid']<1){
-                return $this->login();
             }
-            //权限验证并生成，用户表存储用户菜单权限
+            
+            
+            if(!isset($_SESSION['_eid']) || $_SESSION['_eid']<1){
+                $this->tologin(); 
+                
+            }
+            dba_lib::loadconfig('liveos'); 
+        }
+        /*
+        
+        $type 0 登陆 1增加用户 2编辑用户 3删除用户 4退出       
+         */
+        public static function adminlog($type=0){
+        
+            $data['type']  = $type;
+            $data['atime'] = time();
+            $data['ip'] = help_lib::ip();
+            $data['uid'] = $_SESSION['_eid'];
 
-            $html = view::make('admin/index');
+            dba_lib::insert('ay_adminlog',$data);
+
+        }
+        public function tokenkey(){
+             $this->$tokenkey = router::get_controller().'_'.router::get_action();
+        }
+    
+    	public  function index(){
+            $this->tokenkey();
+            $data['action'] = self::$lang[$this->$tokenkey];
+
+            $html = frame_lib::admin('admin/index',$data);
             
             ECHO $html;
         
@@ -44,8 +55,7 @@ class admin_controller extends controller {
         public function body(){
 
 
-
-            $html = $this->frame('/admin/body');
+            $html = frame_lib::admin('/admin/body');
 
             ECHO $html;
         }
@@ -53,98 +63,33 @@ class admin_controller extends controller {
                 //标识退出的 是哪个管理员 待处理
                 //日志记录  待处理
                 //adminlog($USER['id'],1);
+                admin_controller::adminlog(4);
                 session_destroy();
-                response::jsonp(0,'退出成功');
-
-            
+                response::jsonp(0,'退出成功');         
 
  
         }
-    	public  function login(){
+
+        public function tologin(){
 
             if(isset($_SESSION['_eid']) && $_SESSION['_eid']>=1){
                 return $this->index();
             }
-
-    		if(isset($_POST['action']) &&  $_POST['action'] == 'login'){
-
-
-        		if(authcode_lib::verify_code($_POST['code'])){
-
-                    $name = $_POST['name'] = trim( $_POST['name']);
-                    $pass = $_POST['pass'] = trim( $_POST['pass']);
-
-                    db::loadconfig('liveos');
-                    $sql = 'select * from ay_admin where name = \''.$name.'\' order by id';
-                    $user = db::getone($sql);
-
-                    if($user){
-                        
-
-                        if( $user['off'] < 1  ){
-                            return response::jsonp(4,'账号停用'); 
-                        }
-
-                        $encode = encryption_lib::encode($pass);
-                        
-                        if($encode==$user['pass']){
-                            /*验证ip处理*/
-
-                            $this->verify_ip();
-
-                            $_SESSION['_eid'] = $user['id'];
-                            return response::jsonp(0,'验证通过');
-                        }
-                        
-                        return response::jsonp(3,'密码错误');                        
-
-                    }
-                        return response::jsonp(2,'用户不存在');                                                                 
-                    
-                }
-                return  response::jsonp(1,'验证码错误');        
-                   			
-    		}
-
-            $html = view::make('admin/login');
-
-        	ECHO $html;
-
-    		
-
-        
-        }
-        public function verify_ip(){
-            //            $DLIP = $Mem -> g( 'adminlogin/'. $USER['id'] );
-
-            // if( $DLIP !=  $IP && $USER['yanzhengip'] == 1 ){
-
-            //        adminlog($USER['id'],2,serialize($DLIP));
-            //        session_destroy();
-            //        msgbox($LANG['tuichu'].$LANG['chenggong'],'?');
-            // }
-        }
-
-      	public  function vcode(){
+            //$this->tokenkey();  因为重定向，入口不同可能存在key不同，
+            $data['token'] =  authcode_lib::token('admin_tologin');
             
-            authcode_lib::vcode();
-        	
-        }
-
-        public function admin(){
-            $html = $this->frame('/admin/admin');
-            ECHO $html;
-        }
-        public function adminadd(){
-
-            $html .= view::make('admin/frame/header');
-
-            $html .= view::make('admin/adminadd');
+            $html = view::make('admin/login',$data);
 
             ECHO $html;
 
-
+            exit(0);
         }
+
+
+
+
+
+
 
 
 

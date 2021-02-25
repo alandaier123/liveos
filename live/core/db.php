@@ -13,8 +13,8 @@ class db{
     */
     public static $conn = null;
     public static $dbconfig = null;
-    
     public static $key = null;
+    
 
 
     public function __construct($key = null){
@@ -60,15 +60,26 @@ class db{
         
        
         
-    } 
-    
+    }
 
-    public static function query($sql, $parameters = null) { 
+
+    /*
+        $res_type 0 返回结果集，1 返回 受影响的行 2 返回插入id
+     */
+    public static function query($sql, $parameters = null,$res_type = 0) { 
          
         self::getconnection();
         $stmt = self::$conn[self::$key]->prepare($sql); 
-        $stmt->execute($parameters); 
-        $rs = $stmt->fetchall(); 
+        $stmt->execute($parameters);
+        $rs = null;
+        if($res_type==1){
+            $rs = $stmt->rowCount();
+        }elseif ($res_type==2) {
+            $rs = self::$conn[self::$key]->lastInsertId();
+        }else{
+            $rs = $stmt->fetchAll(PDO::FETCH_ASSOC);   
+        } 
+        
         
         $stmt = null; 
         //self::$conn[self::$key] = null; 

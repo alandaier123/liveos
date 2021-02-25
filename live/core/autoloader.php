@@ -21,8 +21,8 @@ class autoloader{
 	//2、类名必须和文件名对应
 	//	如系统类示例：	lib_user_info  		对应的文件路径  LIVE_PATH.'lib/user/info.php'
 	//          		lib_user_userinfo	对应的文件路径	LIVE_PATH.'lib/user/userinfo.php' 
-	//  应用类示例 		user_info_lib  		对应的文件路径  LIVE_PATH.'lib/user/info.php'
-	//          		user_userinfo_lib	对应的文件路径	LIVE_PATH.'lib/user/userinfo.php'
+	//  应用类示例 		user_info_lib  		对应的文件路径  APP_PATH.'lib/user/info.php'
+	//          		user_userinfo_lib	对应的文件路径	APP_PATH.'lib/user/userinfo.php'
 
 	//确定加载内容
 	public static function loader($class){
@@ -132,6 +132,7 @@ class autoloader{
 	 * @return bool        加载是否成功
 	 */
 	protected static function loadClassFile($class){
+		//var_dump($class);die;
 		$class_info = explode('_', $class);
 		switch (strtolower($class_info[0])) {
 			
@@ -173,17 +174,23 @@ class autoloader{
 			if (!preg_match('/^[\w]+$/', $path)) {
 				return false;
 			}
-			if(is_file($path_prefix.DS.strtolower($path).$ext)) {
+			$path_prefix .= DS . strtolower($path);
+			//var_dump($path_prefix.DS.strtolower($path).$ext);
+/*			if(is_file($path_prefix.DS.strtolower($path).$ext)) {
 				return $path_prefix.DS.strtolower($path).$ext;
 			}elseif (is_dir($path_prefix.DS.strtolower($path))) {
 				//兼容多层目录读取
 				$path_prefix .= DS . strtolower($path);
 			} else{
-				// 兼容文件名 形如user_info 
+				// 兼容文件名 形如user_info 文件名带分割符以区分的 兼容
 				return $path_prefix.DS .strtolower(implode($implode_origin, array_slice($path_info, $key))).$ext;
-			}
+			}*/
+
 			
 		}
+		
+		return $path_prefix.$ext;
+		
 	}
 	
 	public static function getLoadedfiles(){
