@@ -18,8 +18,8 @@ class admin_adminlog_controller extends admin_controller {
 	    	
 	    	$limit = $wherestr = '' ;
     		$PAGE  = (int) isset( $_GET['page']) ? $_GET['page'] : 0;
-
-			$limit = dba_lib::limitstring( 10 ,$PAGE);
+    		$pagenum = 10;
+			$limit = dba_lib::limitstring( $pagenum ,$PAGE);
 
 	    	if($_GET['action']=='adminlog'){ 
 	    		if(!authcode_lib::verify_code($_GET['token'],$this->$tokenkey,2)){
@@ -48,13 +48,17 @@ class admin_adminlog_controller extends admin_controller {
 	    	}
 	    	$sql = 'select l.id,l.uid,l.type,l.ip,l.atime,a.name from ay_adminlog l INNER JOIN ay_admin a on l.uid=a.id '.$wherestr.' order by l.id desc limit '.$limit;
 	    	$data['list'] = dba_lib::query($sql);
-	    	
+	    	$res = dba_lib::getone('select count(*) as total from ay_adminlog ');
+			
 			//var_dump($sql,$limit,$data['list']);
 	    	$data['where'] = $_GET;
-	    	  
+	    	//$data['lang']   = self::$lang;
+	    	$data['pagestr'] = SubPages_lib::pagec( self::$lang['PAGE'], $pagenum, $res['total'], 5, $PAGE, '?action='.$_GET['action'].'&page=','&guan='.$_GET['guan'].'&start='.$_GET['start'].'&end='.$_GET['end'].'&type='.$_GET['type'].'&fenqu='.$_GET['fenqu'] ); 
+
 	    	$data['token']  = authcode_lib::token($this->$tokenkey);
+
             $data['action'] = self::$lang[$this->$tokenkey];
-            $data['lang']   = self::$lang;
+            
 	        $html = frame_lib::admin('/admin/adminlog',$data);
 	        ECHO $html;
 	    }   

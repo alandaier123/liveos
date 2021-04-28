@@ -82,7 +82,39 @@ register_shutdown_function(function() {
 //  config::load('memcached',false);
 // debug::p(config::getall());
 // debug::p(autoloader::getLoadedfiles());
+// redis 配置文件加载
+// 
+/*$r =new R('default');
 
+$key = $_GET['key'];
+$value = $_GET['value'];
+
+$res = $r->set($key,$value);var_dump($res);*/
+/*$resa = array();
+for ($i=0; $i < 5000; $i++) { 
+	$res = $r->set("tutorial-name-".$i, "Redis tutorial-".$i);
+	$resa[$i] = $res;
+}
+debug::p($resa);*/
+
+
+/*$resa = $r->keys(0,'*');
+debug::p($resa);*/
+
+
+/*$resa = $r->flushdb(0);
+debug::p($resa);*/
+
+
+/*$r =new R('test');
+for ($i=0; $i <5000 ; $i++) { 
+	$r->getInstance($i);
+}
+die;*/
+//
+/*$redisObj = new \Redis();
+$redisObj->connect("192.168.154.130", 6379);
+var_dump($redisObj);die;*/
 //路由测试
 router::auto();
 

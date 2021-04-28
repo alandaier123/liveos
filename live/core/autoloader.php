@@ -35,6 +35,7 @@ class autoloader{
 			case 'controller':
 			case 'model':
 			case 'response':
+			case 'r':
 			case 'view':
 			
 				return self::loadfile($class.EXT, LIVE_PATH.DS.CORE_DIRNAME);

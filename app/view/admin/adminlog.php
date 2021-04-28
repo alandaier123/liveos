@@ -64,7 +64,7 @@
 
 <div class="page">
 
-<?php echo SubPages_lib::pagec( $lang['PAGE'], 10, $_GET['page'], 5, $PAGE, '?action='.$_GET['action'].'&page=','&guan='.$_GET['guan'].'&start='.$_GET['start'].'&end='.$_GET['end'].'&type='.$_GET['type'].'&fenqu='.$_GET['fenqu'] );?> 
+<?php echo $pagestr?> 
 </div>
 
 <script type="text/javascript">

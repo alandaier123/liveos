@@ -14,30 +14,31 @@ class SubPages_lib{
    private  $subPage_type;  
    private  $houzui;
    private  $arrays;
-   
+   private  $pagetrim = 1;
+   private  $fenge = '-';
   function __construct($fenye,$each_disNums,$nums,$current_page,$sub_pages,$subPage_link,$houzui,$subPage_type){     
    $this->each_disNums=intval($each_disNums);     
    $this->nums=intval($nums);     
-    $this->houzui=$houzui;
-	if(!isset($fenye['dqdi']))
-	$fenye =array(
-    'dqdi'=>'The',
-	'ye'=>'Page',
-	'home'=>'home',
-	'last'=>'Previous',
-	'next'=>'next',
-	'weiye'=>'end',
-   );
-	$this->arrays=$fenye;
-    if(!$current_page){     
-    $this->current_page=1;     
-    }else{     
-    $this->current_page=intval($current_page);     
-    }     
-   $this->sub_pages=intval($sub_pages);     
-   $this->pageNums=ceil($nums/$each_disNums);     
-   $this->subPage_link=$subPage_link;      
-   $this->show_SubPages($subPage_type);      
+      $this->houzui=$houzui;
+    	if(!isset($fenye['dqdi']))
+        	$fenye =array(
+            'dqdi'=>'The',
+        	'ye'=>'Page',
+        	'home'=>'home',
+        	'last'=>'Previous',
+        	'next'=>'next',
+        	'weiye'=>'end',
+           );
+    	$this->arrays=$fenye;
+        if(!$current_page){     
+        $this->current_page=1;     
+        }else{     
+        $this->current_page=intval($current_page);     
+        }     
+       $this->sub_pages=intval($sub_pages);     
+       $this->pageNums=ceil($nums/$each_disNums);     
+       $this->subPage_link=$subPage_link;      
+       $this->show_SubPages($subPage_type);      
      
   }     
        
@@ -118,50 +119,50 @@ class SubPages_lib{
         
     if($this->current_page > 1){  
         
-        if(  PAGETRIM == 1)
-	         $dangqian = rtrim( $this->subPage_link, WEBFENG);
-        else $dangqian = $this->subPage_link.'1';
+      if(  $this->pagetrim == 1)
+         $dangqian = rtrim( $this->subPage_link, $this->fenge);
+      else $dangqian = $this->subPage_link.'1';
 
 
-    $firstPageUrl = $dangqian.$this->houzui;  
+      $firstPageUrl = $dangqian.$this->houzui;  
 	
-    $prewPageUrl=$this->subPage_link.($this->current_page-1).$this->houzui;     
-    $subPageCss2Str.="<a href=\"$firstPageUrl\">".$this->arrays['home']."</a> "; 
-	if($this->current_page<=2)
-	  $prewPageUrl= $firstPageUrl;
-    $subPageCss2Str.="<a href=\"$prewPageUrl\">".$this->arrays['last']."</a> ";   
-	
+      $prewPageUrl=$this->subPage_link.($this->current_page-1).$this->houzui;     
+      $subPageCss2Str.="<a href=\"$firstPageUrl\">".$this->arrays['home']."</a> "; 
+  	  if($this->current_page<=2)
+  	  $prewPageUrl= $firstPageUrl;
+      $subPageCss2Str.="<a href=\"$prewPageUrl\">".$this->arrays['last']."</a> ";   
+  	
     }else {     
 
-    $subPageCss2Str.="<span>".$this->arrays['home']."</span>";     
-    $subPageCss2Str.="<span>".$this->arrays['last']." </span>"; 
+      $subPageCss2Str.="<span>".$this->arrays['home']."</span>";     
+      $subPageCss2Str.="<span>".$this->arrays['last']." </span>"; 
     
     }     
         
-   $a=$this->construct_num_Page();     
+    $a=$this->construct_num_Page();     
     for($i=0;$i<count($a);$i++){     
-    $s=$a[$i];     
-     if($s == $this->current_page ){     
-     $subPageCss2Str.="<span class='hover'>".$s."</span>";     
-     }else{     
-     $url=$this->subPage_link.$s.$this->houzui; 
+      $s=$a[$i];     
+        if($s == $this->current_page ){     
+          $subPageCss2Str.="<span class='hover'>".$s."</span>";     
+        }else{     
+          $url=$this->subPage_link.$s.$this->houzui; 
 
-	  if($s < 2 && PAGETRIM == 1){
-	    $url = rtrim( $this->subPage_link, WEBFENG).$this->houzui;
-	  }
+      	  if($s < 2 && $this->pagetrim == 1){
+      	    $url = rtrim( $this->subPage_link, $this->fenge).$this->houzui;
+      	  }
 
-     $subPageCss2Str.="<a href=\"$url\">".$s."</a>";     
+          $subPageCss2Str.="<a href=\"$url\">".$s."</a>";     
      }     
     }     
         
     if($this->current_page < $this->pageNums){     
-    $lastPageUrl=$this->subPage_link.$this->pageNums.$this->houzui;     
-    $nextPageUrl=$this->subPage_link.($this->current_page+1).$this->houzui;     
-    $subPageCss2Str.=" <a href=\"$nextPageUrl\">".$this->arrays['next']."</a>";     
-    $subPageCss2Str.="<a href=\"$lastPageUrl\">".$this->arrays['weiye']."</a> ";     
+      $lastPageUrl=$this->subPage_link.$this->pageNums.$this->houzui;     
+      $nextPageUrl=$this->subPage_link.($this->current_page+1).$this->houzui;     
+      $subPageCss2Str.=" <a href=\"$nextPageUrl\">".$this->arrays['next']."</a>";     
+      $subPageCss2Str.="<a href=\"$lastPageUrl\">".$this->arrays['weiye']."</a> ";     
     }else {     
-    $subPageCss2Str.="<span>".$this->arrays['next']."</span>";     
-    $subPageCss2Str.="<span>".$this->arrays['weiye']."</span>";     
+      $subPageCss2Str.="<span>".$this->arrays['next']."</span>";     
+      $subPageCss2Str.="<span>".$this->arrays['weiye']."</span>";     
     }     
     return $sss[]=$subPageCss2Str;     
    }  

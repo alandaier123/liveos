@@ -16,7 +16,7 @@ class config{
 	public static function load($config,$is_public = true){
 		$filename = explode('.', $config);
 		
-		$file_prefix = $is_public? CORE_DIRNAME:'';
+		$file_prefix = $is_public? CORE_DIRNAME.':':'';
 
 		if(empty(static::$config_files[$file_prefix.$filename[0]])) {
 			// autoloader::loadConfig()加载失败返回 false
