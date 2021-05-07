@@ -8,7 +8,7 @@ class R{
      * @var array
      */
     
-
+    
     protected static $instances = array();
   
     /**
@@ -68,7 +68,7 @@ class R{
         try{
             $time = microtime(true);
             self::$instances[$instance_key] = new Redis();
-            self::$instances[$instance_key]->connect(self::$config[$instance_key_hash]['host'], self::$config[$instance_key_hash]['port'], self::connect_timeout);
+            self::$instances[$instance_key]->connect($this->config[$instance_key_hash]['host'], $this->config[$instance_key_hash]['port'], self::connect_timeout);
             if (microtime(true)-$time > self::connect_timeout) {
                 self::trigger_error(2, microtime(true)-$time );
             }

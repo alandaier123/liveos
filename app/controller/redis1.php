@@ -9,8 +9,9 @@ class redis1_controller{
    
     public  function index(){
 
-        //$r =new R('default');
-		//$res = $r->info();
+        
+        $r =new R();
+		$res = $r->keys(0,"*");var_dump($res);
 		/*$r =new R('default');
 
 		$key = $_GET['key'];
@@ -29,12 +30,13 @@ class redis1_controller{
 		// debug::p($class->getStaticPropertyValue('config'));
 		// debug::p($class->getStaticPropertyValue('config'));
 
-		$r1 =new R('default');
+		
+		/*$r1 =new R('default');
 		$r2 =new R('test');
 		$r3 =new R('test3');
 		debug::p($r1);
 		debug::p($r2);
-		debug::p($r3);
+		debug::p($r3);*/
 		/*$r2 = new R('test');
 		debug::p($r2->getStaticPropertyValue('config'));
 		$r3 = new R('test2');

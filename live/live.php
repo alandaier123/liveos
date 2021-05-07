@@ -47,7 +47,24 @@ if(IS_DEBUG){
 
 }
 
+/*set_exception_handler(function($e) {
+    $message = $e->getMessage();
+    if (IS_DEBUG)
+        echo $e;
+});*/
 
+
+register_shutdown_function(function() {
+  
+    if (IS_DEBUG) {
+        
+        echo '<pre>' . PHP_EOL;
+        var_dump(error_get_last());
+        echo '</pre>';        
+ 
+        
+    }
+});
 
 // test_v_lib::asd();
 //  debug::p($_SERVER['REQUEST_URI']);
