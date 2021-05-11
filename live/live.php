@@ -56,7 +56,7 @@ if(IS_DEBUG){
 
 register_shutdown_function(function() {
   
-    if (IS_DEBUG) {
+    if (IS_DEBUG && error_get_last()!=null) {
         
         echo '<pre>' . PHP_EOL;
         var_dump(error_get_last());
@@ -69,17 +69,7 @@ register_shutdown_function(function() {
 // test_v_lib::asd();
 //  debug::p($_SERVER['REQUEST_URI']);
 //  var_dump(autoloader::getLoadedfiles());   
-//终止处理函数
-register_shutdown_function(function() {
-   
-    if (IS_DEBUG ) {
-        //var_dump(error_get_last());
 
-    }else{
-       // 跳转默认终止页面 
-    }
-
-});
 
 //1、自动加载还差cfg、view
 
