@@ -17,7 +17,7 @@ defined('APP_PATH')  OR define('APP_PATH', $_SERVER['DOCUMENT_ROOT'] );
 defined('IS_SCRIPT') OR define('IS_SCRIPT', false);
 
 //调试模式，默认false,
-defined('IS_DEBUG')  OR define('IS_DEBUG', false);
+defined('IS_DEBUG')  OR define('IS_DEBUG', true);
 
 defined('DS')        OR define('DS', '/');
 defined('EXT')       OR define('EXT', '.php'); 
@@ -35,12 +35,12 @@ if(IS_SCRIPT){
 
 
 
-
 //引入自动加载类
 require_once LIVE_PATH.'/'.CORE_DIRNAME.'/autoloader.php';
+spl_autoload_register(array('autoloader', 'loader'),true,true);
+//引入composer 
 
-spl_autoload_register(array('autoloader', 'loader'));
-
+require_once LIVE_PATH. '/../vendor/autoload.php';
 //调试模式下 
 if(IS_DEBUG){
     error_reporting(E_ALL);
@@ -65,7 +65,7 @@ register_shutdown_function(function() {
         
     }
 });
-
+           
 // test_v_lib::asd();
 //  debug::p($_SERVER['REQUEST_URI']);
 //  var_dump(autoloader::getLoadedfiles());   

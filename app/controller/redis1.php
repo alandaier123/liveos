@@ -44,7 +44,12 @@ class redis1_controller{
     }
     
     
-    
+    public function qrcodetest(){
+		$url = 'https://t.zijieimg.com/eqQA68W/';
+		header("Location: $url");
+		exit();
+    }
+
 
   
 }

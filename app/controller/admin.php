@@ -38,12 +38,12 @@ class admin_controller extends controller {
 
         }
         public function tokenkey(){
-             $this->$tokenkey = router::get_controller().'_'.router::get_action();
+             $this->tokenkey = router::get_controller().'_'.router::get_action();
         }
     
     	public  function index(){
             $this->tokenkey();
-            $data['action'] = self::$lang[$this->$tokenkey];
+            $data['action'] = self::$lang[$this->tokenkey];
 
             $html = frame_lib::admin('admin/index',$data);
             
